@@ -1,0 +1,56 @@
+class Friends{
+  
+ //ArrayList<String> name = new ArrayList<String>(); 
+ String[] names = loadStrings("Friends.txt");
+ int index = int(random(names.length));
+ float x;
+ float y;
+ float size;
+ color colour; 
+ float xVelocity;
+ float yVelocity; 
+ 
+ Friends( ){  
+ x = random(0, width) + 3;
+ y = 0;
+ size = 100;
+ colour = 0;
+ //xVelocity += 1;
+ yVelocity += 5;
+
+ }
+ 
+ void draw(){
+  //fill(179, 187, 201);
+  //ellipse(x, y, size, size);
+  //fill(179, 187, 201);
+  for (int i = 0; i < names.length; i ++) { 
+  fill(179, 187, 201);
+  strokeWeight(4);
+  stroke(255, 102, 204);
+  ellipse(x, y, size, size);
+  fill(100);
+  stroke(255);
+  textSize(32);
+  text(names[index], x, y); 
+  }
+ 
+ }
+ 
+ //void update(){
+ //  for(int i = 0; i <names.length; i++){
+ //    friends f = new frineds(x, y);
+ //    friends.add(f);
+ //  }
+   
+  public void move() {
+    //x += xVelocity;
+    y += yVelocity;
+    //yVelocity += ACCELERATION;
+    
+ }
+  boolean onScreen() { //if you have a single if statement in a boolean function, you can make it return the value of itself.
+  return x > 0 && x < width && y > 0 && y < height; //the particle uses its x and y to determine if it is still on the screen.
+  } 
+   
+}   
