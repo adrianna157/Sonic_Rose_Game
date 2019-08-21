@@ -1,0 +1,50 @@
+class Bucket{
+  
+
+PImage img; 
+int bucketSize ;
+int bucketX = width ;
+int bucketY = height ;
+int padding = 100;
+ 
+ Bucket( ){  
+  bucketSize = 100;
+  bucketX = width/2;
+  bucketY = height - padding;
+ }
+ 
+ void setup(){
+   img = loadImage("bucket.png");
+ }
+ 
+
+ void draw(){
+   image(img, bucketX, bucketY,bucketSize, bucketSize);
+ }
+ 
+ boolean collision(Friends f) {
+   boolean isCollision = false; 
+   if(f.y >= bucketY && f.y <= bucketY + height && f.x >= bucketX && f.x <= bucketX + bucketSize) {
+     isCollision = true;    
+   }
+   return isCollision;
+ }  
+ 
+ 
+  boolean collision(Foe foe) {
+   boolean isCollision = false; 
+   if(foe.y >= bucketY && foe.y <= bucketY + height && foe.x >= bucketX && foe.x <= bucketX + bucketSize) {
+     isCollision = true;    
+   }
+   return isCollision;
+ }  
+ 
+ 
+ void move(){
+  if(bucketX >= bucketX){
+     bucketX = mouseX;
+   }
+
+   
+  }  
+}
