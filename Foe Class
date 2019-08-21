@@ -1,0 +1,46 @@
+class Foe{
+  
+ //ArrayList<String> name = new ArrayList<String>();
+ int time;
+ float x;
+ float y;
+ float size;
+ color colour; 
+ float xVelocity;
+ float yVelocity; 
+ 
+ Foe( ){  
+ x = random(0, width);
+ y = 0;
+ size = 100;
+ colour = 0;
+ //xVelocity += 1;
+ yVelocity += 5;
+ }
+ 
+ void draw(){
+  fill(0);
+  strokeWeight(4);
+  stroke(255, 0, 0);
+  ellipse(x, y, size, size);
+  fill(179, 187, 201);
+  textSize(32);
+  textAlign(CENTER);
+  text("Foe",x, y);
+  
+ }
+ 
+  public void move() {
+    //x += xVelocity;
+    y += yVelocity;
+    //yVelocity += ACCELERATION;
+  }   
+ 
+  boolean onScreen() { //if you have a single if statement in a boolean function, you can make it return the value of itself.
+  return x > 0 && x < width && y > 0 && y < height; //the particle uses its x and y to determine if it is still on the screen.
+  } 
+   
+  //void update (){
+  //  if(
+  //  }
+}   
