@@ -1,0 +1,137 @@
+import processing.sound.*;
+
+
+
+/*Final Project, Adrianna Guevarra, Bucket game, where when you catch a friendly object
+ it will score points and when you catch an enemy object it will lose points by -2 points.
+ Goal for MileStone5 is to make a particle Burst when Friend's Object hits the bucket and set a timer for the whole game
+ */
+
+final color BACKGROUND_COLOR = color(255);
+final int NUMBER_OF_PARTICLES = 100;
+int time;
+int totalTime;
+int totalTimeFriend;
+int score; 
+int startAtProgramBegin;
+ArrayList <ParticleSystem> particleSystems;
+float index;
+int previousTimeStamp = 0;
+//String[] names = loadStrings("Friends.txt");
+PImage bg;
+Foe foe; 
+Friends friends; 
+Bucket bucket; 
+
+import processing.sound.*;
+SoundFile file;
+
+ 
+ 
+ 
+
+
+
+void setup () {
+  size (800, 599);
+  bg = loadImage("pinkRose.jpg");
+ file = new SoundFile(this, "happy.mp3");
+ file.play();
+  score = 0;
+  totalTime = (int) random(0, 3000);
+  //totalTimeFriend = (int) random(0, 5000);
+ 
+  particleSystems = new ArrayList<ParticleSystem>();
+
+  foe = new Foe(); 
+  friends = new Friends();
+  bucket = new Bucket();
+
+
+  //time = millis()+1000;
+}
+
+void draw () {
+  background(bg);  
+
+  bucket.setup();
+  bucket.draw();
+  bucket.move();
+  //add a friend function that controls the friend
+  //add a foe function that controls the foe
+  //generate a random number between 1-3
+  foe.draw();  
+  foe.move();
+  friends.draw();
+  friends.move();
+
+  for (int i = particleSystems.size() -1; i >= 0; --i) {
+    ParticleSystem ps = particleSystems.get(i);
+    if (ps.isFinished()) {
+      particleSystems.remove(ps);
+    } else {
+      ps.update();
+      ps.draw();
+    }
+  }
+
+  //if (time > totalTime){
+  //  foe = new Foe();
+  //}
+  if (!foe.onScreen()  && millis() - previousTimeStamp > totalTime) {
+    previousTimeStamp = millis();
+    foe = new Foe();
+  }
+
+  if (!friends.onScreen() && millis() - previousTimeStamp > totalTime) {  
+    previousTimeStamp = millis();
+    friends = new Friends();
+  }
+
+
+  setTimer();
+  drawCounter(); 
+  //bucket.collision(friends);
+
+  if (bucket.collision(friends)) {
+    friends.y = height;
+    friends.x = width;
+    score += 1;
+    particleSystems.add(
+      new ParticleSystem(NUMBER_OF_PARTICLES, mouseX, mouseY));
+    println("hit");
+  }
+
+  if (bucket.collision(foe)) {
+    foe.y = height;
+    foe.x = width;
+    score +=  -2;
+
+    println("hit");
+  }
+  // for (int i = particleSystems.size() -1; i >= 0; --i) {
+  //   ParticleSystem ps = particleSystems.get(i);
+  //   if (ps.isFinished()){
+  //     particleSystems.remove(ps);
+  //     } else {
+  //        ps.update();
+  //        ps.draw();
+  //       }
+  //    }
+}
+
+void drawCounter() {
+  fill(0);
+  textSize(55);
+  text("Score:" + score, width/2 - 250, 100);
+}
+
+void setTimer() {
+  if( frameCount >= 1200){
+
+  background(bg);
+  fill(0);
+  textSize(55);
+  text("GameOver", width/2 - 255, height/2);
+}
+}
